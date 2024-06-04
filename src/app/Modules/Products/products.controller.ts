@@ -46,7 +46,53 @@ const getAllProducts = async (req: Request, res: Response) => {
 const getAProduct = async (req: Request, res: Response) => {
     try {
         const id = req.params.id
-        const result = await productServices.
+        const result = await productServices.getAProduct(id)
+
+        res.status(200).json({
+            success: true,
+            message: "Product fetched successfully!",
+            data: result
+        })
+    } catch (error: any) {
+        res.status(500).json({
+            success: false,
+            message: error.message || "An error is going on controller",
+            error
+        })
+    }
+}
+
+
+const updateAProduct = async (req: Request, res: Response) =>{
+    try {
+        const id = req.params.id;
+        const data = req.body;
+
+        const result = await productServices.updateAProduct(id, data) 
+        res.status(200).json({
+            success: true,
+            message: "Product updated successfully!",
+            data: result
+        })
+    } catch (error: any) {
+        res.status(500).json({
+            success: false,
+            message: error.message || "An error is going on controller",
+            error
+        })
+    }
+}
+
+
+const productDelete = async (req: Request, res: Response) =>{
+    try {
+        const id = req.params.id;
+        const result = await productServices.productDelete(id)
+        res.status(200).json({
+            success: true,
+            message: "Product deleted successfully!",
+            data: result
+        })
     } catch (error: any) {
         res.status(500).json({
             success: false,
@@ -59,6 +105,9 @@ const getAProduct = async (req: Request, res: Response) => {
 
     export const productController = {
         createProducts,
-        getAllProducts
+        getAllProducts,
+        getAProduct,
+        updateAProduct,
+        productDelete
 
     }

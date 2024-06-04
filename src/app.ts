@@ -1,4 +1,4 @@
-import { productsRoutes } from './app/Products/products.routes';
+import { productsRoutes } from './app/Modules/Products/products.routes';
 import express from 'express' 
 import cors from 'cors'
 
