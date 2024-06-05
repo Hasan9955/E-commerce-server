@@ -8,7 +8,7 @@ const variantZodSchema = z.object({
 
 const inventoryZodSchema = z.object({
     quantity: z.number().min(1, "The minimum value of quantity should be 1."),
-    inStock: z.boolean()
+    inStock: z.boolean().default(true)
 })
 
 const productZodSchema = z.object({

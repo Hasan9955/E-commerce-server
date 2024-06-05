@@ -1,4 +1,4 @@
-import { orderServices } from './order.services';
+import { orderServices } from './order.service';
 import { Response } from 'express';
 import { Request } from 'express';
 
@@ -22,7 +22,7 @@ const createOrder = async (req: Request, res: Response) => {
 
 }
 
-const getAllOrders = async (req: Request, res: Response) => {
+const getOrders = async (req: Request, res: Response) => {
     try {
         const { email } = req.query;
         if (!email) {
@@ -51,25 +51,12 @@ const getAllOrders = async (req: Request, res: Response) => {
     }
 }
 
-
-const searchOrder = async (req: Request, res: Response) => {
-    try {
-
-
-
-    } catch (error: any) {
-        res.status(500).json({
-            success: false,
-            message: error.message || 'An error is going on orderController',
-            error
-        })
-    }
-}
+ 
+ 
 
 
 
 export const orderController = {
     createOrder,
-    getAllOrders,
-    searchOrder
+    getOrders,  
 }

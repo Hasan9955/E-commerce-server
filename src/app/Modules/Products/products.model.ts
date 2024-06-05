@@ -8,7 +8,7 @@ const variantsSchema = new Schema<variantTypes>({
 
 const inventorySchema = new Schema<inventoryTypes>({
     quantity: { type: Number, min: [1, "The minimum value of quantity should be 1."], required: true },
-    inStock: { type: Boolean, required: true }
+    inStock: { type: Boolean, default: true }
 }, { _id: false })
 
 
