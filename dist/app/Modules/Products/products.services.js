@@ -44,10 +44,17 @@ const productDelete = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield products_model_1.default.findByIdAndDelete(id);
     return result;
 });
+const searchProduct = (searchValue) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield products_model_1.default.find({
+        name: { $regex: new RegExp(searchValue, 'i') }
+    });
+    return result;
+});
 exports.productServices = {
     createProducts,
     getProducts,
     getAProduct,
     updateAProduct,
-    productDelete
+    productDelete,
+    searchProduct
 };
