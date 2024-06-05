@@ -26,12 +26,24 @@ const createProducts = async (req: Request, res: Response) => {
 
 const getAllProducts = async (req: Request, res: Response) => {
     try {
-        const result = await productServices.getProducts()
-        res.status(200).json({
-            success: true,
-            message: "Products fetched successfully!",
-            data: result
-        })
+        const query = req.query;
+        const searchValue = query.searchTerm;
+        if (!searchValue) {
+            const result = await productServices.getProducts()
+            res.status(200).json({
+                success: true,
+                message: "Products fetched successfully!",
+                data: result
+            })
+        }
+        else {
+            const result = await productServices.searchProduct(searchValue as string)
+            res.status(200).json({
+                success: true,
+                message: `Products matching search term '${searchValue}' fetched successfully!`,
+                data: result
+            })
+        }
     } catch (error: any) {
         res.status(500).json({
             success: false,
@@ -63,12 +75,12 @@ const getAProduct = async (req: Request, res: Response) => {
 }
 
 
-const updateAProduct = async (req: Request, res: Response) =>{
+const updateAProduct = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
         const data = req.body;
 
-        const result = await productServices.updateAProduct(id, data) 
+        const result = await productServices.updateAProduct(id, data)
         res.status(200).json({
             success: true,
             message: "Product updated successfully!",
@@ -84,7 +96,7 @@ const updateAProduct = async (req: Request, res: Response) =>{
 }
 
 
-const productDelete = async (req: Request, res: Response) =>{
+const productDelete = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
         const result = await productServices.productDelete(id)
@@ -103,11 +115,11 @@ const productDelete = async (req: Request, res: Response) =>{
 }
 
 
-    export const productController = {
-        createProducts,
-        getAllProducts,
-        getAProduct,
-        updateAProduct,
-        productDelete
+export const productController = {
+    createProducts,
+    getAllProducts,
+    getAProduct,
+    updateAProduct,
+    productDelete,
 
-    }
+}

@@ -39,13 +39,22 @@ const productDelete = async (id: string) => {
     return result;
 }
 
+const searchProduct = async (searchValue: string) => {
+    
+    const result = await ProductModel.find({
+        name: { $regex: new RegExp(searchValue, 'i') }
+    })
+    return result;
+}
+
 
 export const productServices = {
     createProducts,
     getProducts,
     getAProduct,
     updateAProduct,
-    productDelete
+    productDelete,
+    searchProduct
 
 }
 
