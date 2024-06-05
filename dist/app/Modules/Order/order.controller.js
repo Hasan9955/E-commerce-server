@@ -10,11 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.orderController = void 0;
-const order_services_1 = require("./order.services");
+const order_service_1 = require("./order.service");
 const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const data = req.body;
-        const result = yield order_services_1.orderServices.createOrder(data);
+        const result = yield order_service_1.orderServices.createOrder(data);
         res.status(200).json({
             success: true,
             message: 'Order created successfully!',
@@ -29,11 +29,11 @@ const createOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         });
     }
 });
-const getAllOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email } = req.query;
         if (!email) {
-            const result = yield order_services_1.orderServices.getAllOrders();
+            const result = yield order_service_1.orderServices.getAllOrders();
             res.status(200).json({
                 success: true,
                 message: 'Orders fetched successfully!',
@@ -41,7 +41,7 @@ const getAllOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             });
         }
         else {
-            const result = yield order_services_1.orderServices.searchOrder(email);
+            const result = yield order_service_1.orderServices.searchOrder(email);
             res.status(200).json({
                 success: true,
                 message: 'Orders fetched successfully for user email!',
@@ -57,19 +57,7 @@ const getAllOrders = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         });
     }
 });
-const searchOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-    }
-    catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message || 'An error is going on orderController',
-            error
-        });
-    }
-});
 exports.orderController = {
     createOrder,
-    getAllOrders,
-    searchOrder
+    getOrders,
 };
