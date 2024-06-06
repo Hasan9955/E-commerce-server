@@ -35,23 +35,28 @@ orderSchema.statics.isProductExists = function (id) {
 };
 orderSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {
-        const product = yield products_model_1.default.findById(this.productId);
-        if (product) {
-            const quantity = product.inventory.quantity - this.quantity;
-            if (quantity < 0) {
-                throw new Error(`Insufficient quantity available in inventory. We have ${product.inventory.quantity} items in stock.`);
-            }
-            yield products_model_1.default.findByIdAndUpdate(this.productId, {
-                $set: {
-                    "inventory.quantity": quantity,
-                    "inventory.inStock": quantity <= 0 ? false : true
+        try {
+            const product = yield products_model_1.default.findById(this.productId);
+            if (product) {
+                const quantity = product.inventory.quantity - this.quantity;
+                if (quantity < 0) {
+                    throw new Error(`Insufficient quantity available in inventory. We have ${product.inventory.quantity} items in stock.`);
                 }
-            });
+                yield products_model_1.default.findByIdAndUpdate(this.productId, {
+                    $set: {
+                        "inventory.quantity": quantity,
+                        "inventory.inStock": quantity <= 0 ? false : true
+                    }
+                });
+            }
+            else {
+                throw new Error(`Product with ID ${this.productId} not found.`);
+            }
+            next();
         }
-        else {
-            throw new Error(`Product with ID ${this.productId} not found.`);
+        catch (error) {
+            next(error);
         }
-        next();
     });
 });
 const OrderModel = (0, mongoose_1.model)('order', orderSchema);
