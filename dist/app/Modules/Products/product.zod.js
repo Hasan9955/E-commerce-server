@@ -10,7 +10,7 @@ const variantZodSchema = zod_1.default.object({
     value: zod_1.default.string()
 });
 const inventoryZodSchema = zod_1.default.object({
-    quantity: zod_1.default.number().min(1, "The minimum value of quantity should be 1."),
+    quantity: zod_1.default.number().min(0, "The value of quantity should be a positive number."),
     inStock: zod_1.default.boolean().default(true)
 });
 const productZodSchema = zod_1.default.object({

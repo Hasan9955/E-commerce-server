@@ -1,5 +1,6 @@
 import { merge } from "lodash";
 import ProductModel from "./products.model"
+import ProductTypes from "./product.interface";
 
 
 const createProducts = async (data: object) => {
@@ -20,12 +21,14 @@ const getAProduct = async (id: string) => {
     return result;
 }
 
-const updateAProduct = async (id: string, data: Object) => {
+const updateAProduct = async (id: string, data: ProductTypes) => {
     const product = await ProductModel.findById(id)
 
     if (!product) {
         throw new Error('Invalid id given.')
     }
+    data.inventory.quantity > 0 ? product.inventory.inStock = true : product.inventory.inStock = false
+   
     const mergeProduct = merge(product, data)
     const result = await ProductModel.findByIdAndUpdate(id, mergeProduct, {
         new: true,

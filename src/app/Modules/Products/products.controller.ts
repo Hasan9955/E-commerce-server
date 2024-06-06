@@ -59,12 +59,16 @@ const getAProduct = async (req: Request, res: Response) => {
     try {
         const id = req.params.id
         const result = await productServices.getAProduct(id)
-
-        res.status(200).json({
-            success: true,
-            message: "Product fetched successfully!",
-            data: result
-        })
+        if(result === null){
+            throw new Error ("No product found with this ID.")
+        }
+        else{
+            res.status(200).json({
+                success: true,
+                message: "Product fetched successfully!",
+                data: result
+            })
+        }
     } catch (error: any) {
         res.status(500).json({
             success: false,

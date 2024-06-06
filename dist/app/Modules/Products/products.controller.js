@@ -63,11 +63,16 @@ const getAProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     try {
         const id = req.params.id;
         const result = yield products_services_1.productServices.getAProduct(id);
-        res.status(200).json({
-            success: true,
-            message: "Product fetched successfully!",
-            data: result
-        });
+        if (result === null) {
+            throw new Error("No product found with this ID.");
+        }
+        else {
+            res.status(200).json({
+                success: true,
+                message: "Product fetched successfully!",
+                data: result
+            });
+        }
     }
     catch (error) {
         res.status(500).json({

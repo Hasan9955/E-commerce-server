@@ -6,7 +6,7 @@ const variantsSchema = new mongoose_1.Schema({
     value: { type: String, required: true }
 }, { _id: false });
 const inventorySchema = new mongoose_1.Schema({
-    quantity: { type: Number, min: [1, "The minimum value of quantity should be 1."], required: true },
+    quantity: { type: Number, min: [0, "The value of quantity should be a positive number."], required: true },
     inStock: { type: Boolean, default: true }
 }, { _id: false });
 const productSchema = new mongoose_1.Schema({

@@ -7,7 +7,7 @@ const variantsSchema = new Schema<variantTypes>({
 }, { _id: false })
 
 const inventorySchema = new Schema<inventoryTypes>({
-    quantity: { type: Number, min: [1, "The minimum value of quantity should be 1."], required: true },
+    quantity: { type: Number, min: [0, "The value of quantity should be a positive number."], required: true },
     inStock: { type: Boolean, default: true }
 }, { _id: false })
 
@@ -23,7 +23,6 @@ const productSchema = new Schema<ProductTypes>({
     },
     inventory: inventorySchema
 })
-
 
 const ProductModel = model("products", productSchema)
 

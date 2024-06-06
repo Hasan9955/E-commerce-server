@@ -7,7 +7,7 @@ const variantZodSchema = z.object({
 })
 
 const inventoryZodSchema = z.object({
-    quantity: z.number().min(1, "The minimum value of quantity should be 1."),
+    quantity: z.number().min(0, "The value of quantity should be a positive number."),
     inStock: z.boolean().default(true)
 })
 

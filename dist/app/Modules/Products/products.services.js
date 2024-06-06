@@ -33,6 +33,7 @@ const updateAProduct = (id, data) => __awaiter(void 0, void 0, void 0, function*
     if (!product) {
         throw new Error('Invalid id given.');
     }
+    data.inventory.quantity > 0 ? product.inventory.inStock = true : product.inventory.inStock = false;
     const mergeProduct = (0, lodash_1.merge)(product, data);
     const result = yield products_model_1.default.findByIdAndUpdate(id, mergeProduct, {
         new: true,
