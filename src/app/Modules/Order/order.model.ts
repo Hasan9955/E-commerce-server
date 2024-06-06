@@ -24,7 +24,8 @@ orderSchema.statics.isProductExists = async function (id: string){
 
 orderSchema.pre('save', async function(next){
     
-    const product: (ProductTypes | null) = await ProductModel.findById(this.productId) 
+    try {
+        const product: (ProductTypes | null) = await ProductModel.findById(this.productId) 
     if(product){
         const quantity: number = product.inventory.quantity - this.quantity
         if(quantity < 0){
@@ -41,6 +42,9 @@ orderSchema.pre('save', async function(next){
         throw new Error (`Product with ID ${this.productId} not found.`)
     }
     next();
+    } catch (error: any) {
+        next(error)
+    }
 })
 
 const OrderModel = model<orderTypes, OrderModelType>('order', orderSchema)
